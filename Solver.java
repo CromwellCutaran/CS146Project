@@ -12,26 +12,23 @@ public class Solver {
 //        Scanner in = new Scanner(System.in);
 //        System.out.println("Enter the initial board, one row at a time.\n" +
 //                           "Use '0' to represent the empty tile.");
-//
-//        Board initial = new Board();
-//
-//        initial.showBoard();
-//
-//        Solver solution = new Solver(initial);
-//
-//        testPriorityQueue();
 
-        int[][] b1 = {{ 1, 2, 3, },
-                      { 4, 0, 5, },
-                      { 6, 7, 8} };
-        Board board1 = new Board(b1);
-        testNeighbors(board1);
+//        int[][] b1 = {{ 1, 2, 3, },
+//                      { 4, 0, 5, },
+//                      { 6, 7, 8} };
+//        Board board1 = new Board(b1);
+//        testNeighbors(board1);
 
         int[][] b2 = {{ 1, 2, 3, },
                       { 4, 5, 0, },
                       { 6, 7, 8} };
         Board board2 = new Board(b2);
         testNeighbors(board2);
+
+        Board board3 = board2.getNeighbors().get(0);
+        testNeighbors(board3);
+
+//        Solver solution = new Solver(board1);
     }
 
     /**
@@ -43,7 +40,24 @@ public class Solver {
     public Solver(Board initial) {
 
         PriorityQueue<Board> boardQueue = new PriorityQueue<>(new BoardComparator());
+        boardQueue.add(initial);
 
+        Board next = boardQueue.poll();
+        while (!next.isGoal()) {
+            next.setNeighbors();
+            ArrayList<Board> neighbors = next.getNeighbors();
+            for (Board neighbor : neighbors)
+                if (!next.isEqual(neighbor))
+                    boardQueue.add(neighbor);
+            next = boardQueue.poll();
+        }
+
+        /*
+        Add 'initial' state to 'boardQueue'. While state dequeued is not
+        goal state, add neighboring states to queue and continue loop.
+        Add every state dequeued to an ArrayList<Board> solution as each
+        is one board closer to goal state.
+         */
     }
 
     /**
@@ -52,6 +66,7 @@ public class Solver {
     public int moves() {
         return moves;
     }
+
 
     /**
      *  Since we use a PriorityQueue to decide which board state to dequeue next,
@@ -97,11 +112,6 @@ public class Solver {
         for (int i = 0; i < 2; i++) { // gets [1, 2] of b2
             System.out.println(b.blank.toString());
         }
-
-        for (int i = 0; i < 9; i++) {
-            System.out.print(b.getFlatBoard()[i]);
-        }
-
     }
 
     public static void testNeighbors(Board b) {
@@ -112,6 +122,7 @@ public class Solver {
         b.setNeighbors();
         for (Board neighbor : b.getNeighbors()) {
             neighbor.showBoard();
+            System.out.println("Moves: " + neighbor.getMoves());
             System.out.println();
         }
     }

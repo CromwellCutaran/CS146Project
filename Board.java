@@ -6,6 +6,7 @@ public class Board {
     private ArrayList<Board> neighbors = new ArrayList<>();
     private int hPriority;
     Position blank;
+    int moves;
 
     /**
      * initial Board constructor
@@ -19,6 +20,7 @@ public class Board {
                 blank = new Position(r, c);
             }
         }
+        moves = 0;
     }
 
     /**
@@ -31,6 +33,7 @@ public class Board {
             for (int c = 0; c < 3; c++)
                 if (board[r][c] == 0)
                     blank = new Position(r, c);
+        moves = 0;
     }
 
     public Board() {
@@ -93,7 +96,7 @@ public class Board {
      */
     public Board swap(Position tile) {
         Board neighbor = new Board();
-
+        neighbor.moves = this.moves + 1;
         // copy current Board to neighbor Board
         // can't do a simple int[][] neighbor.board = board
         // because then both boards would share the same object
@@ -109,19 +112,35 @@ public class Board {
     }
 
     /**
-     * Tests the given whether the given index is possible
-     * @param possible is this index possible
-     * @return boolean
+     * Checks whether or not the given
+     * Board is at the goal state
+     * @return t/f
      */
-//    TODO:
-//    public boolean isValid(int[] possible) {
-//    }
+    public boolean isGoal() {
+        int[][] goal = {{ 1, 2, 3, },
+                        { 4, 5, 6, },
+                        { 7, 8, 0} };
+
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                if (board[i][j] != goal[i][j]) return false;
+        return true;
+    }
 
     /**
-     * Helper for implementing getNeighbors()
-     * @return 1D array representation of board
+     * Checks whether or not the given
+     * Board is equal to 'this' Board
+     * @param b Board to be compared
+     * @return t/f
      */
-    public int[] getFlatBoard() { return Arrays.stream(board).flatMapToInt(Arrays::stream).toArray(); }
+    public boolean isEqual(Board b) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                if (board[i][j] != b.board[i][j]) return false;
+        return true;
+    }
+
+    public int getMoves() { return moves; }
 
     /**
      * Hamming priority function defines the priority of a state
