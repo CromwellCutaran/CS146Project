@@ -67,15 +67,6 @@ public class Solver {
     }
 
     /**
-     * Static method to get all neighboring boards
-     * @param boardQueue
-     * @param previous board whose neighboring states will be found
-     */
-    static void getNeighboringBoards(PriorityQueue<Board> boardQueue, Board previous) {
-
-    }
-
-    /**
      * Test to show that BoardComparator is indeed working properly
      */
     public static void testPriorityQueue() {
