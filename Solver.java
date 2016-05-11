@@ -1,25 +1,37 @@
 /**
- * TODO: How to implement storing previous state and adjacency list for current state
+ * TODO: Implement attaching # of moves to newly found neighbors also exclude previous states
  */
 
 import java.util.*;
-
 
 public class Solver {
 
     private int moves;
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter the initial board, one row at a time.\n" +
-                           "Use '0' to represent the empty tile.");
+//        Scanner in = new Scanner(System.in);
+//        System.out.println("Enter the initial board, one row at a time.\n" +
+//                           "Use '0' to represent the empty tile.");
+//
+//        Board initial = new Board();
+//
+//        initial.showBoard();
+//
+//        Solver solution = new Solver(initial);
+//
+//        testPriorityQueue();
 
-        Board initial = new Board();
+        int[][] b1 = {{ 1, 2, 3, },
+                      { 4, 0, 5, },
+                      { 6, 7, 8} };
+        Board board1 = new Board(b1);
+        testNeighbors(board1);
 
-        initial.showBoard();
-
-        Solver solution = new Solver(initial);
-
+        int[][] b2 = {{ 1, 2, 3, },
+                      { 4, 5, 0, },
+                      { 6, 7, 8} };
+        Board board2 = new Board(b2);
+        testNeighbors(board2);
     }
 
     /**
@@ -55,6 +67,15 @@ public class Solver {
     }
 
     /**
+     * Static method to get all neighboring boards
+     * @param boardQueue
+     * @param previous board whose neighboring states will be found
+     */
+    static void getNeighboringBoards(PriorityQueue<Board> boardQueue, Board previous) {
+
+    }
+
+    /**
      * Test to show that BoardComparator is indeed working properly
      */
     public static void testPriorityQueue() {
@@ -70,6 +91,7 @@ public class Solver {
                       { 4, 5, 0, },
                       { 6, 7, 8} };
 
+
         Board board1 = new Board(b1);
         Board board2 = new Board(b2);
 
@@ -81,5 +103,25 @@ public class Solver {
         Board b = boardQueue.poll(); // should give b2 to b
 
         b.showBoard();
+        for (int i = 0; i < 2; i++) { // gets [1, 2] of b2
+            System.out.println(b.blank.toString());
+        }
+
+        for (int i = 0; i < 9; i++) {
+            System.out.print(b.getFlatBoard()[i]);
+        }
+
+    }
+
+    public static void testNeighbors(Board b) {
+        System.out.println("Initial:");
+        b.showBoard();
+        System.out.println();
+
+        b.setNeighbors();
+        for (Board neighbor : b.getNeighbors()) {
+            neighbor.showBoard();
+            System.out.println();
+        }
     }
 }
