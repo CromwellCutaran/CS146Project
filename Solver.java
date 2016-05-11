@@ -1,7 +1,3 @@
-/**
- * TODO: Implement attaching # of moves to newly found neighbors also exclude previous states
- */
-
 import java.util.*;
 
 public class Solver {
@@ -9,38 +5,15 @@ public class Solver {
     private int moves;
 
     public static void main(String[] args) {
-//        Scanner in = new Scanner(System.in);
-//        System.out.println("Enter the initial board, one row at a time.\n" +
-//                           "Use '0' to represent the empty tile.");
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the initial board, one row at a time.\n" +
+                           "Use '0' to represent the empty tile.");
 
-//        int[][] b1 = {{ 1, 2, 3, },
-//                      { 4, 0, 5, },
-//                      { 6, 7, 8} };
-//        Board board1 = new Board(b1);
-//        testNeighbors(board1);
-
-/*        int[][] b2 = {{ 1, 2, 3, },
-                      { 4, 5, 0, },
-                      { 6, 7, 8} };
-        Board board2 = new Board(b2);
-        testNeighbors(board2);
-
-        Board board3 = board2.getNeighbors().get(0);
-        testNeighbors(board3);*/
-
-//        Solver solution = new Solver(board1);
-
-        int[][] board = {{ 1, 8, 2, },
-                { 0, 4, 3, },
-                { 7, 6, 5} };
+        Board initial = new Board(true);
 
 
-
-        Board initial = new Board(board);
-        initial.showBoard();
-        System.out.println();
+        System.out.println("Initial board:");
         Solver solution = new Solver(initial);
-
     }
 
     /**
@@ -54,6 +27,7 @@ public class Solver {
         PriorityQueue<Board> boardQueue;
         ArrayList<Board> solution = new ArrayList<>();
         Board prevBoard = null;
+        int statesReached = 0;
 
         // initial state: prevBoard = null, initial = initial board
         while(!initial.isGoal())
@@ -66,6 +40,7 @@ public class Solver {
             for (Board neighbor : initial.getNeighbors())
             {
                 boardQueue.add(neighbor);
+                statesReached++;
             }
 
             //if the lowest priority board is equals to the previous board,
@@ -84,24 +59,15 @@ public class Solver {
             //now check whether initial reached to the goal for while loop
         }
 
-        for (Board aBoard : solution)
+        for (Board reached : solution)
         {
-            aBoard.showBoard();
-            System.out.println(aBoard.getMoves());
+            reached.showBoard();
             System.out.println();
         }
 
-
-
+        System.out.println("States enqueued: " + statesReached);
+        System.out.println("Number of moves: " + solution.get(solution.size()-1).getMoves());
     }
-
-        /*
-        Add 'initial' state to 'boardQueue'. While state dequeued is not
-        goal state, add neighboring states to queue and continue loop.
-        Add every state dequeued to an ArrayList<Board> solution as each
-        is one board closer to goal state.
-         */
-
 
     /**
      * @return # of moves taken to reach solution
@@ -109,7 +75,6 @@ public class Solver {
     public int moves() {
         return moves;
     }
-
 
     /**
      *  Since we use a PriorityQueue to decide which board state to dequeue next,
@@ -125,7 +90,7 @@ public class Solver {
     }
 
     /**
-     * Test to show that BoardComparator is indeed working properly
+     * Tester to show that BoardComparator is indeed working properly
      */
     public static void testPriorityQueue() {
         BoardComparator bc = new BoardComparator();
@@ -157,6 +122,10 @@ public class Solver {
         }
     }
 
+    /**
+     * Tester for implementation of finding adjacent states
+     * @param b target state
+     */
     public static void testNeighbors(Board b) {
         System.out.println("Initial:");
         b.showBoard();

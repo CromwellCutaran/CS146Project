@@ -25,7 +25,7 @@ public class Board {
 
     /**
      * Currently tester class for new Board states
-     * @param b
+     * @param b builds board with this 2D array
      */
     public Board(int[][] b) {
         board = b;
@@ -36,6 +36,9 @@ public class Board {
         moves = 0;
     }
 
+    /**
+     * Constructor used by swap(...) method
+     */
     public Board() {
         board = new int[3][3];
     }
@@ -69,6 +72,9 @@ public class Board {
         }
     }
 
+    /**
+     * @return ArrayList<Board> containing adjacent states
+     */
     public ArrayList<Board> getNeighbors() { return neighbors; }
 
     /**
@@ -145,6 +151,9 @@ public class Board {
         return true;
     }
 
+    /**
+     * @return number of moves taken to get from initial to current state
+     */
     public int getMoves() { return moves; }
 
     /**
@@ -166,6 +175,10 @@ public class Board {
         return hPriority;
     }
 
+    /**
+     * Position is a helper data structure used to more
+     * easily calculate neighbors of a state
+     */
     class Position {
         public int r;
         public int c;
