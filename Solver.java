@@ -13,12 +13,13 @@ public class Solver {
                            "->\n");
         Board initial = new Board(true);
         System.out.println("Initial board:");
+        testNeighbors(initial);
         Solver solution = new Solver(initial);
     }
 
     /**
      * Constructor for a board's solution. Finds the actual solution
-     * of a board, adding to an ArrayList<Board> containing every
+     * of a board, adding to a List1 containing every
      * state of the board seen along the way.
      * @param initial Board to be solved
      */
@@ -98,12 +99,12 @@ public class Solver {
         PriorityQueue<Board> boardQueue = new PriorityQueue<>(bc);
 
         int[][] b1 = {{ 1, 2, 3, },
-                { 4, 0, 5, },
-                { 6, 7, 8} };
+                      { 4, 0, 5, },
+                      { 6, 7, 8} };
 
         int[][] b2 = {{ 1, 2, 3, },
-                { 4, 5, 0, },
-                { 6, 7, 8} };
+                      { 4, 5, 0, },
+                      { 6, 7, 8} };
 
 
         Board board1 = new Board(b1);

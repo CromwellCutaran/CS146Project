@@ -30,7 +30,7 @@ public class Board {
     }
 
     /**
-     * Currently tester class for new Board states
+     * Tester class for new Board states
      * @param b builds board with this 2D array
      */
     public Board(int[][] b) {
@@ -63,7 +63,7 @@ public class Board {
     }
 
     /**
-     * Builds ArrayList<Board> neighbors for current Board
+     * Builds List of neighbors for current Board
      * String[] directions is used to denote which direction
      * we look to swap the blank tile
      */
@@ -81,7 +81,7 @@ public class Board {
     }
 
     /**
-     * @return ArrayList<Board> containing adjacent states
+     * @return List containing adjacent states
      */
     public ArrayList<Board> getNeighbors() { return neighbors; }
 
@@ -105,8 +105,8 @@ public class Board {
     }
 
     /**
-     * @param tile tile to swap blank with
-     * @return
+     * @param tile to swap blank tile with
+     * @return new Board state following swap
      */
     public Board swap(Position tile) {
         Board neighbor = new Board();
@@ -172,8 +172,8 @@ public class Board {
      */
     public int getHammingPriority() {
         int[][] goal = {{ 1, 2, 3, },
-                { 4, 5, 6, },
-                { 7, 8, 0} };
+                        { 4, 5, 6, },
+                        { 7, 8, 0} };
         hPriority = 0;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
