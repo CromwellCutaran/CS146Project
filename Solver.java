@@ -6,12 +6,12 @@ public class Solver {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter the initial board, one row at a time.\n" +
-                           "Use '0' to represent the empty tile.");
-
+        System.out.println("Enter the initial board, one integer at a time,\n" +
+                           "in the following order (use '0' to represent the empty tile):\n" +
+                           "- - ->\n" +
+                           "- ->\n" +
+                           "->\n");
         Board initial = new Board(true);
-
-
         System.out.println("Initial board:");
         Solver solution = new Solver(initial);
     }

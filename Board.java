@@ -16,8 +16,14 @@ public class Board {
         board = new int[3][3];
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                board[r][c] = (new Scanner(System.in).nextInt());
-                blank = new Position(r, c);
+                int value = (new Scanner(System.in)).nextInt();
+                while (value < 0 || value > 9) {
+                    System.out.println("Please enter an integer in the range [0, 9]");
+                    value = (new Scanner(System.in)).nextInt();
+                }
+                board[r][c] = value;
+                if (board[r][c] == 0)
+                    blank = new Position(r, c);
             }
         }
         moves = 0;
@@ -58,6 +64,8 @@ public class Board {
 
     /**
      * Builds ArrayList<Board> neighbors for current Board
+     * String[] directions is used to denote which direction
+     * we look to swap the blank tile
      */
     public void setNeighbors() {
         Position[] possible = new Position[]
@@ -164,8 +172,8 @@ public class Board {
      */
     public int getHammingPriority() {
         int[][] goal = {{ 1, 2, 3, },
-                        { 4, 5, 6, },
-                        { 7, 8, 0} };
+                { 4, 5, 6, },
+                { 7, 8, 0} };
         hPriority = 0;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
