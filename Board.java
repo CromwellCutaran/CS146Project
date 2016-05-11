@@ -134,9 +134,14 @@ public class Board {
      * @return t/f
      */
     public boolean isEqual(Board b) {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                if (board[i][j] != b.board[i][j]) return false;
+
+        if (b != null) {
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    if (board[i][j] != b.board[i][j]) return false;
+        } else {
+            return false;
+        }
         return true;
     }
 
@@ -157,6 +162,7 @@ public class Board {
             for (int j = 0; j < 3; j++)
                 if (board[i][j] != goal[i][j])
                     hPriority++;
+        hPriority += this.moves;
         return hPriority;
     }
 

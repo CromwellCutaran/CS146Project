@@ -19,16 +19,28 @@ public class Solver {
 //        Board board1 = new Board(b1);
 //        testNeighbors(board1);
 
-        int[][] b2 = {{ 1, 2, 3, },
+/*        int[][] b2 = {{ 1, 2, 3, },
                       { 4, 5, 0, },
                       { 6, 7, 8} };
         Board board2 = new Board(b2);
         testNeighbors(board2);
 
         Board board3 = board2.getNeighbors().get(0);
-        testNeighbors(board3);
+        testNeighbors(board3);*/
 
 //        Solver solution = new Solver(board1);
+
+        int[][] board = {{ 1, 8, 2, },
+                { 0, 4, 3, },
+                { 7, 6, 5} };
+
+
+
+        Board initial = new Board(board);
+        initial.showBoard();
+        System.out.println();
+        Solver solution = new Solver(initial);
+
     }
 
     /**
@@ -39,18 +51,49 @@ public class Solver {
      */
     public Solver(Board initial) {
 
-        PriorityQueue<Board> boardQueue = new PriorityQueue<>(new BoardComparator());
-        boardQueue.add(initial);
+        PriorityQueue<Board> boardQueue;
+        ArrayList<Board> solution = new ArrayList<>();
+        Board prevBoard = null;
 
-        Board next = boardQueue.poll();
-        while (!next.isGoal()) {
-            next.setNeighbors();
-            ArrayList<Board> neighbors = next.getNeighbors();
-            for (Board neighbor : neighbors)
-                if (!next.isEqual(neighbor))
-                    boardQueue.add(neighbor);
-            next = boardQueue.poll();
+        // initial state: prevBoard = null, initial = initial board
+        while(!initial.isGoal())
+        {
+            //generate neighbor boards
+            initial.setNeighbors();
+
+            boardQueue = new PriorityQueue<>(new BoardComparator());
+            //put the neighbor boards in the priority queue
+            for (Board neighbor : initial.getNeighbors())
+            {
+                boardQueue.add(neighbor);
+            }
+
+            //if the lowest priority board is equals to the previous board,
+            //dequeue it and find another board with the lowest priority.
+            //And the board will be added to the array list of solution Board.
+            if (boardQueue.peek().isEqual(prevBoard))
+                boardQueue.remove();
+            solution.add(boardQueue.poll());
+
+
+            //change the state: prevBoard = initial,
+            //initial = the new Board which added to the solution recently
+            prevBoard = initial;
+            initial = solution.get(solution.size()-1);
+
+            //now check whether initial reached to the goal for while loop
         }
+
+        for (Board aBoard : solution)
+        {
+            aBoard.showBoard();
+            System.out.println(aBoard.getMoves());
+            System.out.println();
+        }
+
+
+
+    }
 
         /*
         Add 'initial' state to 'boardQueue'. While state dequeued is not
@@ -58,7 +101,7 @@ public class Solver {
         Add every state dequeued to an ArrayList<Board> solution as each
         is one board closer to goal state.
          */
-    }
+
 
     /**
      * @return # of moves taken to reach solution
@@ -90,12 +133,12 @@ public class Solver {
         PriorityQueue<Board> boardQueue = new PriorityQueue<>(bc);
 
         int[][] b1 = {{ 1, 2, 3, },
-                      { 4, 0, 5, },
-                      { 6, 7, 8} };
+                { 4, 0, 5, },
+                { 6, 7, 8} };
 
         int[][] b2 = {{ 1, 2, 3, },
-                      { 4, 5, 0, },
-                      { 6, 7, 8} };
+                { 4, 5, 0, },
+                { 6, 7, 8} };
 
 
         Board board1 = new Board(b1);
