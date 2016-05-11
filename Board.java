@@ -17,8 +17,8 @@ public class Board {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 int value = (new Scanner(System.in)).nextInt();
-                while (value < 0 || value > 9) {
-                    System.out.println("Please enter an integer in the range [0, 9]");
+                while (value < 0 || value > 8) {
+                    System.out.println("Please enter an integer in the range [0, 8]");
                     value = (new Scanner(System.in)).nextInt();
                 }
                 board[r][c] = value;

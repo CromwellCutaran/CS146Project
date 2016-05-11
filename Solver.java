@@ -13,7 +13,8 @@ public class Solver {
                            "->\n");
         Board initial = new Board(true);
         System.out.println("Initial board:");
-        testNeighbors(initial);
+        initial.showBoard();
+        System.out.println();
         Solver solution = new Solver(initial);
     }
 
